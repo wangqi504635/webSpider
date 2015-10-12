@@ -8,7 +8,6 @@ import time
 
 
 # url = "http://www.juzimi.com/"
-inital_url = "http://www.juzimi.com/ju/55412"
 prefix_url = "http://www.juzimi.com/ju/"
 
 content_re = ".*句子欣赏评论: “(.*)” 原作者：.*"
@@ -32,9 +31,8 @@ def print_msg(html):
 
 
 def main():
-    url_queue.put(inital_url)
     while(True):
-        time.sleep(5)
+        time.sleep(4)
         current_url = url_queue.get()
         print("current url :", current_url)
         seen.add(current_url)
@@ -62,6 +60,8 @@ def init_from_db():
         conn.commit()
     except Exception as err:
         print(err)
+    finally:
+        conn.close()
 
 def save_to_db():
     try:
@@ -80,7 +80,16 @@ def save_to_db():
         conn.commit()
     except Exception as err:
         print(err)
+    finally:
+        conn.close()
 
-if __name__ == '__main__':
+try:
+    init_from_db()
     main()
-
+except Exception as err:
+    print(err)
+finally:
+    print("stop!!!!!!!!!!!!!")
+    print(seen)
+    print(url_queue)
+    save_to_db()
