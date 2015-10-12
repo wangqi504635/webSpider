@@ -1,9 +1,8 @@
 __author__ = 'wangqi'
 # -*- coding:utf-8 -*-
-import urllib.request
 import re
 import queue
-from bs4 import BeautifulSoup
+from commen.commen import *
 
 # url = "http://www.juzimi.com/"
 inital_url = "http://www.juzimi.com/ju/55412"
@@ -16,24 +15,6 @@ book_re = ".*出处：出自《(.*)》.*"
 url_queue = queue.Queue(-1)
 seen=set()
 
-
-
-
-
-def getHtml(url):
-    try:
-        headers = ('User-Agent','Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11')
-        opener = urllib.request.build_opener()
-        opener.addheaders = [headers]
-        response = opener.open(url)
-        html = response.read()
-        html = html.decode('utf-8')
-        return html
-    except Exception as err:
-        print(err)
-        return '<html/>'
-
-
 def print_msg(html):
     result = re.findall(content_re,html)
     for juzi in result:
@@ -45,14 +26,7 @@ def print_msg(html):
     for juzi in result:
         print(juzi)
 
-def extract_urls(html,url_base):
-    soup = BeautifulSoup(html,"lxml")
-    for a in soup.find_all('a'):
-        if 'href' in a.attrs:
-            if 'http' in a['href']:
-                yield a['href']
-            elif '/' in a['href']:
-                yield url_base + a['href']
+
 
 def main():
     url_queue.put(inital_url)
@@ -67,6 +41,6 @@ def main():
             if next_url not in seen:
                 url_queue.put(next_url)
 
-if __name__ == '__main__':
-   main()
 
+html = getHtml(inital_url)
+print(html)
