@@ -2,7 +2,7 @@ __author__ = 'wangqi'
 # -*- coding:utf-8 -*-
 import re
 import queue
-from commen.commen import *
+from commen import *
 
 # url = "http://www.juzimi.com/"
 inital_url = "http://www.juzimi.com/ju/55412"
@@ -43,4 +43,4 @@ def main():
 
 
 html = getHtml(inital_url)
-print(html)
+print_msg(html)
