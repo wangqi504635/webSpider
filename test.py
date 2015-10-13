@@ -1,6 +1,7 @@
 __author__ = 'wangqi'
 # -*- coding:utf-8 -*-
 import re
+import pymysql
 
 def testre1():
     prefix_url_re = r'http://www.juzimi.com/ju/\d*'
@@ -35,5 +36,22 @@ def readfile():
         for line in f:
             print(line)
 
-writefile()
-readfile()
+def insert():
+    conn = pymysql.connect(host='127.0.0.1',port = 3307, user='spider',passwd='spider', db='spider')
+    cur = conn.cursor()
+    cur.execute('show tables;')
+
+    for i in cur.fetchall():
+        print(i)
+
+    cur.execute("INSERT INTO jzm_url_queue (`url`) VALUES ('testt1');")
+    cur.execute("INSERT INTO jzm_url_queue (`url`) VALUES ('testt2');")
+    cur.execute("INSERT INTO jzm_url_queue (`url`) VALUES ('testt3');")
+    conn.commit()
+    conn.close()
+
+
+try:
+    insert()
+except Exception as err:
+    print(err)

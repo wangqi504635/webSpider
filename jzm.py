@@ -37,6 +37,7 @@ def main():
     while(counter == 1):
         counter = 2
         for ip,port in get_ip():
+            print(port,ip)
             current_url = url_queue.get(block=False)
             if current_url[-1] == '/':
                 current_url = current_url[0:-1]
