@@ -2,6 +2,7 @@ __author__ = 'wangqi'
 # -*- coding:utf-8 -*-
 import re
 import pymysql
+import time
 
 def testre1():
     prefix_url_re = r'http://www.juzimi.com/ju/\d*'
